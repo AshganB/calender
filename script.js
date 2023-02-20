@@ -1,6 +1,6 @@
 
 const days=document.querySelector(".days");
-prevNextButton = document.querySelectorAll("#previous #next");
+prevNextButton = document.querySelectorAll("button");
 let today=new Date();
 console.log(today);
 let currentMonth=today.getMonth();
@@ -33,6 +33,10 @@ let monthsOfYear =[
     'December'
 ];
 
+//to show the month and the actual date above on the calender
+document.querySelector(".month h1").innerHTML=monthsOfYear[today.getMonth()];
+document.querySelector(".month p").innerHTML=today.toDateString();
+
 const renderCalender =() => {
     let firstDayOfMonth =new Date(currentYear,currentMonth ,1).getDay(), // get first day of month
     lastDateOfMonth =new Date(currentYear,currentMonth +1,0).getDate(), //get last date of month
@@ -46,13 +50,14 @@ const renderCalender =() => {
     }
 
     for(let i=1; i<=lastDateOfMonth;i++){ //create a table of  all days of current month
-         let isToday=1 ===today.getDate()&&currentMonth===new Date().getMonth() && currentYear ===new Date().getFullYear() ? "active":"";
-        listOfDays+= `<th>${i}</th>`;
+         let isToday= i ===today.getDate()&&currentMonth===new Date().getMonth() && currentYear ===new Date().getFullYear() ? "active":"";
+        listOfDays+= `<th class="${isToday}">${i}</th>`;
+
         
     }
 
     for(let i=lastDayofMonth; i<6;i++){ //create table of next month first days
-        listOfDays+= `<th>${i-lastDateOfLastMonth +1}</th>`;
+        listOfDays+= `<th>${i-lastDayofMonth +1}</th>`;
         
     }
 
@@ -66,4 +71,48 @@ prevNextButton.forEach(button =>{
    renderCalender();
     });
 });
+
+
+let weather ={
+    apiKey:"436dfed4d87dcee590f021623b970ea0",
+    fetchWeather: function(city){
+        fetch(
+            "https://api.openweathermap.org/data/2.5/weather?q=" +
+            city +
+            "&units=metric&appid=" +
+            this.apiKey
+        )
+            .then((response)=> response.json())
+            .then((data)=> this.displayWeather(data));
+    },
+    displayWeather:function(data){
+        const{name}=data;
+        const{description}=data.weather[0];
+        const{temp,humidity}=data.main;
+        document.querySelector(".city").innerText ="Weather in "+name;
+        document.querySelector(".description").innerText=description;
+        document.querySelector(".temp").innerText=temp +"°C";
+        document.querySelector(".humidity").innerText="Humidity: " +humidity+ "%";
+    }
+}
+
+/* const api=document.querySelector(".weatherApi");
+
+fetch("https://api.openweathermap.org/data/2.5/weather?q=London&appid=436dfed4d87dcee590f021623b970ea0&units=metric").then(response =>response.json())
+.then(posts=>{
+    posts.forEach(post => {
+        const postElement=document.createElement("span")
+    postElement.innerHTML=
+        `<span.k>${post.main.temp}</span.k>`
+             
+        
+
+    api.appendChild(postElement);
+    });
+    
+
+})
+.catch((error) => {
+    console.log(error);
+}) */
  

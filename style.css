@@ -2,6 +2,10 @@ body{
     background-color: azure;
   
 }
+h1 ,p{
+  
+    align-items: center;
+}
 .container{
     margin: 100px;
     align-items: center;
@@ -38,4 +42,7 @@ th,td{
 }
 .container tr th{
     width: calc(100% / 8);
+}
+ th.active{
+    background: #ad425f;
 }
