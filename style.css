@@ -34,15 +34,22 @@ th,td{
     border:1px solid burlywood;
     
 }
+th {
+background-color: cornsilk;
+}
 .container tr{
     display: flex;
     
     flex-wrap: wrap; 
     text-align: center;
 }
-.container tr th{
+.container tr th {
     width: calc(100% / 8);
 }
+.container td {
+    width: calc(100% / 8);
+}
+
  th.active{
     background: #ad425f;
 }
